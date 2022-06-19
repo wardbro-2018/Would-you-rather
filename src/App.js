@@ -1,25 +1,45 @@
-import logo from './logo.svg';
 import './App.css';
+import QuestionList from './components/QuestionsList';
+import NavBar from './components/NavBar';
+import EnsureAuth from './components/EnsureAuth';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { handleInitialData } from './actions/shared';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import NewQuestion from './components/NewQuestion';
+import LeaderBoard from './components/LeaderBoard';
+import Question from './components/Question';
+import NotFound from './components/NotFound';
+import EnsureQuestion from './components/EnsureQuestion';
+
 
 function App() {
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(handleInitialData())
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <EnsureAuth>
+          <Router>
+            <NavBar />
+            <Routes >
+              <Route index element={<QuestionList />} />
+              <Route  path="add" element={<NewQuestion />} />
+              <Route  path="LeaderBoard" element={<LeaderBoard />} />
+              <Route  path="questions/:question_id" element={<EnsureQuestion><Question/></EnsureQuestion>}/>
+              <Route path="404" element={<NotFound/>}/>
+            </Routes>
+          </Router>
+        </EnsureAuth>
+
+      </div>
     </div>
   );
 }
 
 export default App;
+

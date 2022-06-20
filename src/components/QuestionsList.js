@@ -25,7 +25,7 @@ function QuestionList() {
         </div>
       </nav>
       <ul>
-        {Object.values(questions).filter(x => showUnanswered ^ answered.includes(x.id)).map(x => <PreviewQuestion key={x.id} question={x} />)}
+        {Object.values(questions).filter(x => showUnanswered ^ answered.includes(x.id)).sort((x, y) => y.timestamp - x.timestamp).map(x => <PreviewQuestion key={x.id} question={x} />)}
       </ul>
     </div>
   );

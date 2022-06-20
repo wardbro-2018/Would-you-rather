@@ -1,5 +1,4 @@
 import { _saveQuestion, _saveQuestionAnswer } from "../_DATA"
-import { handleInitialData } from "./shared"
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ANSWER_QUESTION = 'ANSWER_QUESTION'
@@ -46,7 +45,7 @@ export function handleAnswerQuestion(info) {
   return (dispatch) => {
 
     return _saveQuestionAnswer(info).then(() =>
-      dispatch(handleInitialData())
+      dispatch(answerQuestion(info))
     )
   }
 }
